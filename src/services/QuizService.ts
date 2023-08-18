@@ -26,12 +26,12 @@ export const updateQuizService = async (
   id: string,
   userId: string
 ) => {
-  const caseService = await Quiz.findOne({
+  const categoryService = await Quiz.findOne({
     _id: id,
     isDeleted: false,
     seller: userId,
   });
-  if (!caseService) {
+  if (!categoryService) {
     throw new createHttpError.NotFound("Case not found");
   }
 
