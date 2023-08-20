@@ -3,6 +3,9 @@ const categorySchema: mongoose.Schema = new mongoose.Schema({
   categoryName: {
     type: String,
     trim: true,
+    lowercase: true,
+    required: [true, "Category Name is required."],
+    unique: true,
   },
 });
 

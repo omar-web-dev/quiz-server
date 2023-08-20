@@ -2,15 +2,43 @@ import createHttpError from "http-errors";
 
 import Quiz from "../models/QuizModel";
 import mongoose from "mongoose";
+import Category from "../models/CategoryModel";
 
-export const addQuizService = async (cases: any) => {
-  const newCase = await Quiz.create(cases);
-  return newCase;
+export const addQuizService = async (quizData : any) => {
+  const newQuiz = await Quiz.create(quizData);
+  
+  return newQuiz;
 };
 
+// export const addQuizService = async ( quizData : any) => {
+//   try {
+//     // Create the new quiz
+//     const newQuiz = await Quiz.create({
+//       ...quizData,
+//       blockName: blockName, // Assuming your Quiz schema has a categoryId field
+//     });
+//     const count = await Quiz.countDocuments();
+//     // Find the category by its ID
+//     const category = await Category.findById(blockName);
+//     if (!category) {
+//       throw new Error("Category not found");
+//     }
+
+//     // Update the category's list of quizzes
+//     category.quizzes.push(newQuiz._id);
+//     await category.save();
+
+//     return {newQuiz, count};
+//   } catch (error) {
+//     console.error(error);
+//     throw new Error("Failed to add quiz to category");
+//   }
+// };
+
 export const getAllQuizService = async () => {
-  const cases = await Quiz.find({ isDeleted: false });
-  return cases;
+  const count = await Quiz.countDocuments();
+  const quiz = await Quiz.find({ isDeleted: false });
+  return {quiz, count};
 };
 
 export const getQuizByIdService = async (id: string) => {
@@ -20,6 +48,16 @@ export const getQuizByIdService = async (id: string) => {
   }
   return quizService;
 };
+
+
+export const getQuizByCategoryService = async (category: string) => {
+  const quizService = await Quiz.find({category, isDeleted: false });
+  if (!quizService) {
+    throw new createHttpError.NotFound("Category not found");
+  }
+  return quizService;
+};
+
 
 export const updateQuizService = async (
   updatedCase: any,

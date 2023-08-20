@@ -1,31 +1,42 @@
 import mongoose from "mongoose";
 const quizSchema: mongoose.Schema = new mongoose.Schema({
-  questions: {
+  category: {
     type: String,
     trim: true,
+    lowercase: true,
+    required: [true, "Option is required."],
   },
 
-  option1: {
-    type: String,
-    trim: true,
-  },
-  option2: {
-    type: String,
-    trim: true,
-  },
-  option3: {
-    type: String,
-    trim: true,
-  },
-  option4: {
-    type: String,
-    trim: true,
-  },
-  correctAnswer: {
-    type: String,
-    trim: true,
+  quizList: {
+    type: Array,
+
+    time: {
+      type: Number,
+      trim: true,
+      default: 1,
+    },
+      question: {
+        type: String,
+        trim: true,
+        required: [true, "Question is required."],
+      },
+      optionList: {
+        type: Array,
+        lowercase: true,
+        required: [true, "Option is required."],
+      },
+      correct: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        required: [true, "Correct Answer is required."],
+      },
   },
 
+  imageUrl: {
+    type: String,
+    default: null,
+  },
   isDeleted: {
     type: Boolean,
     default: false,

@@ -5,11 +5,12 @@ import {
   addQuizService,
   deleteQuizService,
   getAllQuizService,
+  getQuizByCategoryService,
   getQuizByIdService,
   updateQuizService,
 } from "../services/QuizService";
 
-export const getQuizAddController = async (
+export const getQuizController = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
@@ -29,7 +30,23 @@ export const QuizByIdController = async (
 ) => {
   try {
     const { id } = req.params as { id: string };
+    console.log(req.params)
     const data = await getQuizByIdService(id);
+    res.send({ success: true, data: data });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+export const QuizByCategoryController = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { category } = req.params as { category: string };
+    console.log(req.params)
+    const data = await getQuizByCategoryService(category);
     res.send({ success: true, data: data });
   } catch (err) {
     return next(err);
@@ -42,9 +59,9 @@ export const addQuizController = async (
   next: NextFunction
 ) => {
   try {
-    const newQuiz = req.body;
-    const data = await addQuizService(newQuiz);
-    res.send({ success: true, data: data, message: "Quiz added successfully" });
+    const quizData = req.body;
+    const data = await addQuizService(quizData);
+    res.send({ success: true, data, message: "Quiz added successfully" });
   } catch (err) {
     return next(err);
   }

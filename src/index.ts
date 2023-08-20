@@ -35,7 +35,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use(`${apiBaseUrl}user`, require(`./routes/${currentApiVersion}UserRoute`))
 app.use(`${apiBaseUrl}auth`, require(`./routes/${currentApiVersion}AuthRoute`))
-app.use(`${apiBaseUrl}quiz-add`, require(`./routes/${currentApiVersion}QuizRoute`))
+app.use(`${apiBaseUrl}quiz`, require(`./routes/${currentApiVersion}QuizRoute`))
 app.use(`${apiBaseUrl}my-quiz`, require(`./routes/${currentApiVersion}MyQuizRoute`))
 app.use(`${apiBaseUrl}category`, require(`./routes/${currentApiVersion}CategoryRoute`))
 

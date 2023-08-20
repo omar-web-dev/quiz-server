@@ -18,6 +18,20 @@ API List
     4. Sign In          http://localhost:5000/api/v1/auth/login
     5. Sign out         http://localhost:5000/api/v1/auth/logout
     6. Change Password  http://localhost:5000/api/v1/auth/change-password
+    7. add quiz         http://localhost:5000/api/v1/quiz/add
+
+
+/////////////////////////////////////////// Add quiz form design \\\\\\\\\
+
+{
+  "category": "Addreass",
+  "quizList" : {
+    "question" : "Question is required.",
+    "optionList" : ["option1", "option3", "option3", "option4"], 
+    "correct" : "option4"
+  }
+}
+
 
 Thanks
 
