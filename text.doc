@@ -12,13 +12,14 @@
 
 
 API List 
-    1. Get all user     http://localhost:5000/api/v1/user
-    2. Get user by id   http://localhost:5000/api/v1/user/(id)
-    3. Sign Up          http://localhost:5000/api/v1/auth/register
-    4. Sign In          http://localhost:5000/api/v1/auth/login
-    5. Sign out         http://localhost:5000/api/v1/auth/logout
-    6. Change Password  http://localhost:5000/api/v1/auth/change-password
-    7. add quiz         http://localhost:5000/api/v1/quiz/add
+    1. Get all user         http://localhost:5000/api/v1/user
+    2. Get user by id       http://localhost:5000/api/v1/user/(id)
+    3. Sign Up              http://localhost:5000/api/v1/auth/register
+    4. Sign In              http://localhost:5000/api/v1/auth/login
+    5. Sign out             http://localhost:5000/api/v1/auth/logout
+    6. Change Password      http://localhost:5000/api/v1/auth/change-password
+    7. add quiz             http://localhost:5000/api/v1/quiz/add
+    7. get quiz by category `http://localhost:5000/api/v1/quiz/${category}`
 
 
 /////////////////////////////////////////// Add quiz form design \\\\\\\\\
@@ -31,6 +32,28 @@ API List
     "correct" : "option4"
   }
 }
+
+
+get data by category
+
+onst axios = require('axios');
+
+const category = 'your_category_name_here'; // Replace with the actual category name
+
+const apiUrl = `http://localhost:5000/api/v1/quiz/${category}`;
+
+axios.get(apiUrl)
+  .then(response => {
+    const responseData = response.data;
+    console.log('Fetched data:', responseData);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+
+
+
+h
 
 
 Thanks
