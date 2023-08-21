@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const categorySchema: mongoose.Schema = new mongoose.Schema({
-  categoryName: {
+  blockName: {
     type: String,
     trim: true,
     lowercase: true,

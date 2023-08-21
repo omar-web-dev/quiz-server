@@ -3,10 +3,46 @@ import createHttpError from "http-errors";
 import Quiz from "../models/QuizModel";
 import mongoose from "mongoose";
 import Category from "../models/CategoryModel";
+// import Category from "../models/CategoryModel";
 
-export const addQuizService = async (quizData : any) => {
-  const newQuiz = await Quiz.create(quizData);
-  
+// export const addQuizService = async (quizData : any) => {
+//   const newQuiz = await Quiz.create(quizData);
+
+//   return newQuiz;
+// };
+
+export const addQuizService = async (quizData: any) => {
+  const { blockName, quizList, ...otherFields } = quizData;
+
+  console.log(blockName)
+  let category: any;
+
+  if (blockName) {
+    const categoryData = await Category.findOne({ blockName });
+    category = categoryData?.blockName;
+  } else {
+    category = await Category.findOne({ blockName: "Default Category" });
+    if (!category) {
+      category = await Category.create({ blockName: "Default Category" });
+    }
+  }
+
+  const newQuizData = {
+    ...otherFields,
+    blockName,
+    quizList,
+  };
+  const pushQuizData = {
+    quizList: quizList?.map((quizItem: any) => ({
+      ...quizItem,
+      quizItem,
+    })),
+  };
+
+  // const newQuiz = await Quiz.create(newQuizData);
+  const newQuiz = await Quiz.create(quizData)
+  // await quizList.save();
+
   return newQuiz;
 };
 
@@ -37,8 +73,8 @@ export const addQuizService = async (quizData : any) => {
 
 export const getAllQuizService = async () => {
   const count = await Quiz.countDocuments();
-  const quiz = await Quiz.find({ isDeleted: false });
-  return {quiz, count};
+  const quizList = await Quiz.find();
+  return { quizList, count };
 };
 
 export const getQuizByIdService = async (id: string) => {
@@ -49,15 +85,13 @@ export const getQuizByIdService = async (id: string) => {
   return quizService;
 };
 
-
 export const getQuizByCategoryService = async (category: string) => {
-  const quizService = await Quiz.find({category, isDeleted: false });
+  const quizService = await Quiz.find({ category });
   if (!quizService) {
     throw new createHttpError.NotFound("Category not found");
   }
   return quizService;
 };
-
 
 export const updateQuizService = async (
   updatedCase: any,

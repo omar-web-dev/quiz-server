@@ -16,8 +16,8 @@ export const getQuizController = async (
   next: NextFunction
 ) => {
   try {
-    const quiz = await getAllQuizService();
-    res.send({ success: true, data: quiz });
+    const quizList = await getAllQuizService();
+    res.send({ success: true, data: quizList });
   } catch (err) {
     return next(err);
   }
@@ -45,7 +45,7 @@ export const QuizByCategoryController = async (
 ) => {
   try {
     const { category } = req.params as { category: string };
-    console.log(req.params)
+    // console.log(req.params)
     const data = await getQuizByCategoryService(category);
     res.send({ success: true, data: data });
   } catch (err) {
@@ -60,8 +60,9 @@ export const addQuizController = async (
 ) => {
   try {
     const quizData = req.body;
+    // console.log(req.body)
     const data = await addQuizService(quizData);
-    res.send({ success: true, data, message: "Quiz added successfully" });
+    res.send({ success: true, data : data, message: "Quiz added successfully" });
   } catch (err) {
     return next(err);
   }
